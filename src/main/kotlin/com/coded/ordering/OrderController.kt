@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/orders")
 class OrderController(
     val orderRepository: OrderRepository
-) {
+)  {
 
     @GetMapping("/welcome")
     fun welcome(): String {
@@ -23,7 +23,6 @@ class OrderController(
     @GetMapping
     fun listOrders(): List<OrderEntity> {
         return orderRepository.findAll()
-
     }
 }
 

@@ -4,6 +4,7 @@ import com.coded.ordering.UsersRepository
 import org.springframework.security.core.userdetails.*
 import org.springframework.stereotype.Service
 
+
 @Service
 class CustomUserDetailsService(
     private val usersRepository: UsersRepository

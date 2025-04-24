@@ -28,7 +28,8 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/auth/**").permitAll()
+                it.requestMatchers("/auth/**", "/menu/**").permitAll()  // public endpoints
+                    .requestMatchers("/orders/**").authenticated()     // protected endpoints
                     .anyRequest().authenticated()
             }
             .sessionManagement {
@@ -39,6 +40,7 @@ class SecurityConfig(
 
         return http.build()
     }
+
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
