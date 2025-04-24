@@ -1,4 +1,4 @@
-package com.coded.spring.ordering
+package com.coded.ordering
 
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.JpaRepository
@@ -18,10 +18,9 @@ data class OrderEntity(
     var userId: Int,
     var restaurant: String,
     var items: String,
-    ) {
-        constructor() : this(0, 0, "", "")
-    }
-
+) {
+    constructor() : this(0, 0, "", "")
+}
 
 
 

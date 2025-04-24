@@ -1,4 +1,4 @@
-package com.coded.spring.ordering
+package com.coded.ordering
 
 import org.springframework.web.bind.annotation.*
 
