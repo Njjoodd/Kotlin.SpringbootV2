@@ -24,5 +24,15 @@ class OrderController(
     fun listOrders(): List<OrderEntity> {
         return orderRepository.findAll()
     }
+
+
+    @RestController
+    class HelloWorldController {
+
+        @GetMapping("/hello")
+        fun helloWorld(): String {
+            return "Hello World"
+        }
+    }
 }
 
