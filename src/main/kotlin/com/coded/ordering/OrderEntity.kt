@@ -2,24 +2,19 @@ package com.coded.ordering
 
 import jakarta.persistence.*
 import org.springframework.data.jpa.repository.JpaRepository
-
-@Named
-interface OrderRepository : JpaRepository<OrderEntity, Int>
-
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "orders")
-data class OrderEntity(
+data class OrderEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
-    @Column(name = "user_id")
-    var userId: Int,
-    var restaurant: String,
-    var items: String,
-) {
-    constructor() : this(0, 0, "", "")
-}
+    val id: Long = 0,
+    val customerName: String,
+    val restaurant: String,
+    val items: String,
+    val createdAt: LocalDateTime = LocalDateTime.now()
+)
 
 
 

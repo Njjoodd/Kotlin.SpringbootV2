@@ -1,5 +1,5 @@
 package com.coded.Profiles
-import com.coded.ordering.UserEntity
+import com.coded.authentication.UserEntity
 import jakarta.persistence.*
 
 @Entity
@@ -8,15 +8,17 @@ data class ProfileEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    @Column(name = "first_name", nullable = false)
-    val firstName: String,
-
-    @Column(name = "last_name", nullable = false)
-    val lastName: String,
-    @Column(name = "phone_number", nullable = false)
-    val phoneNumber: String,
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", unique = true)
-    val user: UserEntity
+    val user: UserEntity,
+
+    @Column(nullable = false)
+    val firstName: String,
+
+    @Column(nullable = false)
+    val lastName: String,
+
+    @Column(name = "phone_number", nullable = false)
+    val phoneNumber: String
 )

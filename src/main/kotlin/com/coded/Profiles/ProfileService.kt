@@ -1,31 +1,25 @@
 package com.coded.Profiles
-
-import com.coded.ordering.UsersRepository
-import org.springframework.security.core.userdetails.UsernameNotFoundException
+import com.coded.authentication.UsersRepository
+import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Service
-
 
 @Service
 class ProfileService(
-    private val profileRepository: ProfileRepository,
-    private val userRepository: UsersRepository
+    private val usersRepository: UsersRepository,
+    private val profileRepository: ProfileRepository
 ) {
-    fun createProfile(username: String, request: ProfileRequest): ProfileEntity{
-        val user = userRepository.findByUsername(username)
-            ?: throw UsernameNotFoundException("User not found")
+    fun saveProfile(request: ProfileController.ProfileRequest, userDetails: User): String {
+        val userEntity = usersRepository.findByUsername(userDetails.username)
+            ?: return "User not found"
 
-        if (profileRepository.findByUserId(user.id!!) != null) {
-            throw IllegalStateException("Profile already exists for this user")
-
-        }
         val profile = ProfileEntity(
+            user = userEntity,
             firstName = request.firstName,
             lastName = request.lastName,
-            phoneNumber = request.phoneNumber,
-            user = user
-
+            phoneNumber = request.phoneNumber
         )
 
-        return profileRepository.save(profile)
+        profileRepository.save(profile)
+        return "Profile saved for ${userEntity.username}"
     }
 }

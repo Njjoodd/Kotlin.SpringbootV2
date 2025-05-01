@@ -1,9 +1,6 @@
 package com.coded.authentication
-
-import com.coded.ordering.UsersRepository
 import org.springframework.security.core.userdetails.*
 import org.springframework.stereotype.Service
-
 
 @Service
 class CustomUserDetailsService(
@@ -16,7 +13,7 @@ class CustomUserDetailsService(
         return User.builder()
             .username(user.username)
             .password(user.password)
-            .roles(user.role.toString())
+            .roles(user.role.name)
             .build()
     }
 }

@@ -1,7 +1,9 @@
 package com.coded.authentication
 
+
 import jakarta.servlet.FilterChain
-import jakarta.servlet.http.*
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -29,15 +31,11 @@ class JwtAuthenticationFilter(
         val token = authHeader.substring(7)
         val username = jwtService.extractUsername(token)
 
-        if (SecurityContextHolder.getContext().authentication == null) {
-            if (jwtService.isTokenValid(token, username)) {
-                val userDetails = userDetailsService.loadUserByUsername(username)
-                val authToken = UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.authorities
-                )
-                authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
-                SecurityContextHolder.getContext().authentication = authToken
-            }
+        if (SecurityContextHolder.getContext().authentication == null && jwtService.isTokenValid(token, username)) {
+            val userDetails = userDetailsService.loadUserByUsername(username)
+            val authToken = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
+            authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
+            SecurityContextHolder.getContext().authentication = authToken
         }
 
         filterChain.doFilter(request, response)

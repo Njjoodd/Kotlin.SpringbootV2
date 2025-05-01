@@ -1,32 +1,26 @@
 package com.coded.Profiles
 
-import org.springframework.http.ResponseEntity
-import org.springframework.security.core.Authentication
-import org.springframework.stereotype.Repository
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.User
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/profiles")
+@RequestMapping("/api/v1/profile")
 class ProfileController(
     private val profileService: ProfileService
 ) {
+
     @PostMapping
-    fun createProfile(
+    fun createOrUpdateProfile(
         @RequestBody request: ProfileRequest,
-        authentication: Authentication
-    ): ResponseEntity<Any> {
-        val username = authentication.name
-        val profile = profileService.createProfile(username, request)
-        return ResponseEntity.ok(profile)
+        @AuthenticationPrincipal userDetails: User
+    ): String {
+        return profileService.saveProfile(request, userDetails)
     }
+
+    data class ProfileRequest(
+        val firstName: String,
+        val lastName: String,
+        val phoneNumber: String
+    )
 }
-
-        data class ProfileRequest(
-            val firstName: String,
-            val lastName: String,
-            val phoneNumber: String
-        )
-

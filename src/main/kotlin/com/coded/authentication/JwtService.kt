@@ -1,4 +1,5 @@
 package com.coded.authentication
+
 import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
 import org.springframework.stereotype.Component
@@ -9,7 +10,7 @@ import javax.crypto.SecretKey
 class JwtService {
 
     private val secretKey: SecretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256)
-    private val expirationMs: Long = 1000 * 60 * 60
+    private val expirationMs: Long = 1000 * 60 * 60 // 1 hour
 
     fun generateToken(username: String): String {
         val now = Date()
