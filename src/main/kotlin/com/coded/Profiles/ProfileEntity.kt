@@ -1,7 +1,6 @@
 package com.coded.Profiles
 import com.coded.authentication.UserEntity
 import jakarta.persistence.*
-
 @Entity
 @Table(name = "profiles")
 data class ProfileEntity(
@@ -21,4 +20,6 @@ data class ProfileEntity(
 
     @Column(name = "phone_number", nullable = false)
     val phoneNumber: String
-)
+) {
+    constructor() : this(0, UserEntity(), "", "", "")
+}

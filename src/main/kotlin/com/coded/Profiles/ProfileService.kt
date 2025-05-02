@@ -12,14 +12,24 @@ class ProfileService(
         val userEntity = usersRepository.findByUsername(userDetails.username)
             ?: return "User not found"
 
-        val profile = ProfileEntity(
-            user = userEntity,
-            firstName = request.firstName,
-            lastName = request.lastName,
-            phoneNumber = request.phoneNumber
-        )
+        val existing = profileRepository.findByUserId(userEntity.id!!)
+        val profile = if (existing != null) {
+            existing.copy(
+                firstName = request.firstName,
+                lastName = request.lastName,
+                phoneNumber = request.phoneNumber
+            )
+        } else {
+            ProfileEntity(
+                user = userEntity,
+                firstName = request.firstName,
+                lastName = request.lastName,
+                phoneNumber = request.phoneNumber
+            )
+        }
 
         profileRepository.save(profile)
+
         return "Profile saved for ${userEntity.username}"
     }
 }
