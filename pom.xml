@@ -13,10 +13,16 @@
 	</parent>
 
 	<groupId>com.coded.spring</groupId>
-	<artifactId>Ordering</artifactId>
+	<artifactId>MicroServices</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Ordering</name>
+	<packaging>pom</packaging>
+	<name>MicroServices</name>
 	<description>Spring Boot + Kotlin + PostgreSQL</description>
+	<modules>
+		<module>authentication</module>
+		<module>ordering</module>
+		<module>welcome</module>
+	</modules>
 
 	<properties>
 		<java.version>21</java.version>

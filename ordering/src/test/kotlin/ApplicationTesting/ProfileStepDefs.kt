@@ -1,6 +1,5 @@
 package ApplicationTesting
 
-import com.coded.authentication.CustomUserDetailsService
 import com.coded.authentication.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
